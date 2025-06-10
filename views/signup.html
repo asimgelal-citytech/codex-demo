@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+  <form action="/signup" method="post" enctype="multipart/form-data">
+    <label>Full Name:<input type="text" name="name" required></label><br>
+    <label>Username:<input type="text" name="username" required></label><br>
+    <label>Email:<input type="email" name="email" required></label><br>
+    <label>Contact:
+      <select name="contact">
+        <option value="+1 USA">🇺🇸 USA</option>
+        <option value="+91 India">🇮🇳 India</option>
+        <option value="+44 UK">🇬🇧 UK</option>
+      </select>
+    </label><br>
+    <label>Password:<input type="password" name="password" required></label><br>
+    <label>Confirm Password:<input type="password" name="confirmPassword" required></label><br>
+    <label>Picture:<input type="file" name="picture" accept="image/*"></label><br>
+    <label>Address:<textarea name="address"></textarea></label><br>
+    <button type="submit">Sign Up</button>
+  </form>
+  <a href="/login">Login</a>
+</body>
+</html>
