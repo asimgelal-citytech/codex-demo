@@ -2,26 +2,73 @@
 <html>
 <head>
   <title>Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: linear-gradient(135deg, #fafafa, #e0e0e0);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    a {
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-  <h1>Sign Up</h1>
-  <form action="/signup" method="post" enctype="multipart/form-data">
-    <label>Full Name:<input type="text" name="name" required></label><br>
-    <label>Username:<input type="text" name="username" required></label><br>
-    <label>Email:<input type="email" name="email" required></label><br>
-    <label>Contact:
-      <select name="contact">
-        <option value="+1 USA">🇺🇸 USA</option>
-        <option value="+91 India">🇮🇳 India</option>
-        <option value="+44 UK">🇬🇧 UK</option>
-      </select>
-    </label><br>
-    <label>Password:<input type="password" name="password" required></label><br>
-    <label>Confirm Password:<input type="password" name="confirmPassword" required></label><br>
-    <label>Picture:<input type="file" name="picture" accept="image/*"></label><br>
-    <label>Address:<textarea name="address"></textarea></label><br>
-    <button type="submit">Sign Up</button>
-  </form>
-  <a href="/login">Login</a>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <script type="text/babel">
+    function SignUpForm() {
+      return (
+        <div className="form-container">
+          <h1>Sign Up</h1>
+          <form action="/signup" method="post" encType="multipart/form-data">
+            <label>Full Name:<input type="text" name="name" required /></label><br />
+            <label>Username:<input type="text" name="username" required /></label><br />
+            <label>Email:<input type="email" name="email" required /></label><br />
+            <label>Contact:
+              <select name="contact">
+                <option value="+1 USA">🇺🇸 USA</option>
+                <option value="+91 India">🇮🇳 India</option>
+                <option value="+44 UK">🇬🇧 UK</option>
+                <option value="+977 Nepal">🇳🇵 Nepal</option>
+              </select>
+            </label><br />
+            <label>Password:<input type="password" name="password" required /></label><br />
+            <label>Confirm Password:<input type="password" name="confirmPassword" required /></label><br />
+            <label>Picture:<input type="file" name="picture" accept="image/*" /></label><br />
+            <label>Address:<textarea name="address"></textarea></label><br />
+            <button type="submit">Sign Up</button>
+          </form>
+          <a href="/login">Login</a>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<SignUpForm />, document.getElementById('root'));
+  </script>
 </body>
 </html>
