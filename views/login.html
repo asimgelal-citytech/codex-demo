@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head><title>Login</title></head>
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: linear-gradient(135deg, #fafafa, #e0e0e0);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    a {
+      color: #000;
+    }
+  </style>
+</head>
 <body>
-  <h1>Login</h1>
-  <form action="/login" method="post">
-    <label>Username:<input type="text" name="username" required></label><br>
-    <label>Password:<input type="password" name="password" required></label><br>
-    <button type="submit">Login</button>
-  </form>
-  <a href="/signup">Sign Up</a>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <script type="text/babel">
+    function LoginForm() {
+      return (
+        <div className="form-container">
+          <h1>Login</h1>
+          <form action="/login" method="post">
+            <label>Username:<input type="text" name="username" required /></label><br />
+            <label>Password:<input type="password" name="password" required /></label><br />
+            <button type="submit">Login</button>
+          </form>
+          <a href="/signup">Sign Up</a>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<LoginForm />, document.getElementById('root'));
+  </script>
 </body>
 </html>

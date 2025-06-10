@@ -8,7 +8,9 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 - Simple admin route lists all registered users (requires login)
 
 ## Setup
-1. Copy `.env.sample` to `.env` and adjust the PostgreSQL connection string and session secret.
+1. Copy `.env.sample` to `.env` and provide your database credentials (`DB_USER`,
+   `DB_PASSWORD`, `DB_HOST`, `DB_NAME`) or set `DATABASE_URL`. Also set
+   `SESSION_SECRET`.
 2. Run `npm install` to install dependencies.
 3. Execute the SQL in `db.sql` on your PostgreSQL server.
 4. Start the app with `node server.js`.

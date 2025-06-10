@@ -6,15 +6,27 @@ const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 require('dotenv').config();
 
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_NAME,
+  DATABASE_URL,
+  SESSION_SECRET
+} = process.env;
+
+const connectionString = DATABASE_URL ||
+  `postgres://${encodeURIComponent(DB_USER)}:${encodeURIComponent(DB_PASSWORD)}@${DB_HOST}/${DB_NAME}`;
+
 const app = express();
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use(session({
   store: new pgSession({ pool }),
-  secret: process.env.SESSION_SECRET || 'secret',
+  secret: SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false
 }));
