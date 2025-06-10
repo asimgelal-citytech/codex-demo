@@ -1,25 +1,18 @@
-# Simple Login Form
+# CRUD User Application
 
-This project is a simple form-based web page that allows users to log in using a username and password.
+This project is a minimal Node.js/Express application demonstrating a sign up form that stores user information in a PostgreSQL database.
 
 ## Features
-- User-friendly login form
-- Collects username and password
-- Authenticates user based on provided credentials
+- Sign up form collects name, username, email, contact number with country, password/confirmation, profile picture (5MB limit) and address
+- Login form validates credentials from the database
+- Simple admin route lists all registered users (requires login)
 
-## Usage
-1. Open the login page in your web browser.
-2. Enter your username and password.
-3. Click the **Login** button to submit your credentials.
+## Setup
+1. Copy `.env.sample` to `.env` and adjust the PostgreSQL connection string and session secret.
+2. Run `npm install` to install dependencies.
+3. Execute the SQL in `db.sql` on your PostgreSQL server.
+4. Start the app with `node server.js`.
+5. Visit `http://localhost:3000/signup` to register a user.
 
-## Requirements
-- A modern web browser
-
-## Project Structure
-- The project contains a login form page (add your HTML/JS or backend files as needed).
-
-## Customization
-- You can modify the form fields or authentication logic as per your requirements.
-
-## License
-This project is open source and available under the [MIT License](LICENSE). 
+## Notes
+This repository only contains source files. Dependencies must be installed separately.
