@@ -52,7 +52,7 @@ app.post('/signup', upload.single('picture'), async (req, res) => {
       'INSERT INTO users (name, username, email, contact, password, picture, address, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
       [name, username, email, contact, password, req.file ? req.file.filename : null, address, null]
     );
-    res.redirect('/login');
+    res.redirect('/login?signup=1');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error creating user');
