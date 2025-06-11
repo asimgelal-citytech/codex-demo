@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div id="root" class="w-full"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/react-hot-toast@2/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" data-presets="typescript,react">
+    const { useState, useEffect } = React;
+    const toast = window['react-hot-toast'].toast;
+
+    interface User {
+      id: number;
+      name: string;
+      username: string;
+      email: string;
+      description?: string;
+      picture?: string;
+    }
+
+    function UserCard({ user, onSave }: { user: User; onSave: (id:number, desc:string)=>void }) {
+      const [edit, setEdit] = useState(false);
+      const [desc, setDesc] = useState(user.description || '');
+      const avatar = user.picture ? `/uploads/${user.picture}` : 'https://via.placeholder.com/80';
+
+      const save = () => {
+        onSave(user.id, desc);
+        setEdit(false);
+      };
+
+      return (
+        <div className="bg-white p-4 rounded shadow flex flex-col">
+          <div className="flex items-center space-x-4">
+            <img src={avatar} alt="avatar" className="w-16 h-16 rounded-full object-cover" />
+            <div>
+              <h2 className="text-lg font-medium">{user.name}</h2>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+          </div>
+          <div className="mt-4 flex-1">
+            {edit ? (
+              <>
+                <textarea value={desc} onChange={e=>setDesc(e.target.value)} className="w-full border rounded p-2" />
+                <div className="mt-2 flex gap-2">
+                  <button onClick={save} className="px-3 py-1 bg-blue-500 text-white rounded text-sm">Save</button>
+                  <button onClick={()=>{setEdit(false);setDesc(user.description||'')}} className="px-3 py-1 bg-gray-200 rounded text-sm">Cancel</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-sm mb-2 min-h-[2rem]">{user.description || 'No description'}</p>
+                <button onClick={()=>setEdit(true)} className="text-sm text-blue-600">Edit</button>
+              </>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function AdSection() {
+      return (
+        <div className="bg-white rounded shadow p-4 flex flex-col justify-between h-full">
+          <div>
+            <h2 className="text-lg font-medium mb-2">Advertisements</h2>
+            <p className="text-sm text-gray-500">No active ads.</p>
+          </div>
+          <button className="mt-4 px-3 py-2 bg-green-500 text-white rounded text-sm">Create New Ad</button>
+        </div>
+      );
+    }
+
+    function AdminPanel() {
+      const [users, setUsers] = useState<User[]>([]);
+      useEffect(() => {
+        fetch('/api/users')
+          .then(res => res.json())
+          .then(setUsers);
+      }, []);
+
+      const saveDescription = async (id:number, description:string) => {
+        await fetch(`/api/users/${id}`, {
+          method: 'PUT',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({description})
+        });
+        toast.success('Description saved successfully!');
+        setUsers(u => u.map(user => user.id === id ? { ...user, description } : user));
+      };
+
+      return (
+        <div className="max-w-6xl mx-auto w-full">
+          <h1 className="text-2xl font-semibold mb-4">Admin Dashboard</h1>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="space-y-4 md:col-span-2">
+              {users.map(u => (
+                <UserCard key={u.id} user={u} onSave={saveDescription} />
+              ))}
+            </div>
+            <AdSection />
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(
+      <React.Fragment>
+        <AdminPanel />
+        <react-hot-toast.Toaster position="top-right" />
+      </React.Fragment>,
+      document.getElementById('root')
+    );
+  </script>
+</body>
+</html>

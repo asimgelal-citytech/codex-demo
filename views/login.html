@@ -1,13 +1,56 @@
 <!DOCTYPE html>
-<html>
-<head><title>Login</title></head>
-<body>
-  <h1>Login</h1>
-  <form action="/login" method="post">
-    <label>Username:<input type="text" name="username" required></label><br>
-    <label>Password:<input type="password" name="password" required></label><br>
-    <button type="submit">Login</button>
-  </form>
-  <a href="/signup">Sign Up</a>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div id="root" class="w-full max-w-md"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/react-hot-toast@2/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" data-presets="typescript,react">
+    const { useState, useEffect } = React;
+    const toast = window['react-hot-toast'].toast;
+
+    function LoginForm() {
+      useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('signup')) {
+          toast.success('Welcome! Your account has been created successfully.', { duration: 4000 });
+        }
+      }, []);
+      return (
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className="text-xl font-semibold mb-4 text-center">Sign In</h2>
+          <form action="/login" method="post" className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Username</label>
+              <input type="text" name="username" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Password</label>
+              <input type="password" name="password" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Sign In</button>
+          </form>
+          <div className="text-center mt-4 text-sm">
+            Don't have an account? <a href="/signup" className="text-blue-600">Sign Up</a>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(
+      <React.Fragment>
+        <LoginForm />
+        <react-hot-toast.Toaster position="top-center" />
+      </React.Fragment>,
+      document.getElementById('root')
+    );
+  </script>
 </body>
 </html>
