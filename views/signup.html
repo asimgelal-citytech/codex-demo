@@ -1,27 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>Sign Up</h1>
-  <form action="/signup" method="post" enctype="multipart/form-data">
-    <label>Full Name:<input type="text" name="name" required></label><br>
-    <label>Username:<input type="text" name="username" required></label><br>
-    <label>Email:<input type="email" name="email" required></label><br>
-    <label>Contact:
-      <select name="contact">
-        <option value="+1 USA">🇺🇸 USA</option>
-        <option value="+91 India">🇮🇳 India</option>
-        <option value="+44 UK">🇬🇧 UK</option>
-      </select>
-    </label><br>
-    <label>Password:<input type="password" name="password" required></label><br>
-    <label>Confirm Password:<input type="password" name="confirmPassword" required></label><br>
-    <label>Picture:<input type="file" name="picture" accept="image/*"></label><br>
-    <label>Address:<textarea name="address"></textarea></label><br>
-    <button type="submit">Sign Up</button>
-  </form>
-  <a href="/login">Login</a>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div id="root" class="w-full max-w-lg"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/react-hot-toast@2/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" data-presets="typescript,react">
+    const toast = window['react-hot-toast'].toast;
+
+    function SignupForm() {
+      return (
+        <div className="bg-white p-6 rounded shadow">
+          <h2 className="text-xl font-semibold mb-4 text-center">Create Account</h2>
+          <form action="/signup" method="post" encType="multipart/form-data" className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <input type="text" name="name" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Username</label>
+              <input type="text" name="username" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input type="email" name="email" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Contact</label>
+              <select name="contact" className="w-full border rounded px-3 py-2">
+                <option value="+1 USA">🇺🇸 USA</option>
+                <option value="+91 India">🇮🇳 India</option>
+                <option value="+44 UK">🇬🇧 UK</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Password</label>
+              <input type="password" name="password" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Confirm Password</label>
+              <input type="password" name="confirmPassword" required className="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Picture</label>
+              <input type="file" name="picture" accept="image/*" className="w-full" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Address</label>
+              <textarea name="address" className="w-full border rounded px-3 py-2"></textarea>
+            </div>
+            <button type="submit" className="w-full bg-green-500 text-white py-2 rounded">Sign Up</button>
+          </form>
+          <div className="text-center mt-4 text-sm">
+            Already have an account? <a href="/login" className="text-blue-600">Login</a>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(
+      <React.Fragment>
+        <SignupForm />
+        <react-hot-toast.Toaster position="top-center" />
+      </React.Fragment>,
+      document.getElementById('root')
+    );
+  </script>
 </body>
 </html>
