@@ -6,6 +6,15 @@ const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 require('dotenv').config();
 
+if (!process.env.DATABASE_URL) {
+  console.error('Missing DATABASE_URL in environment. Did you create a .env file?');
+  process.exit(1);
+}
+
+if (!process.env.SESSION_SECRET) {
+  console.warn('SESSION_SECRET is not set, using a default value.');
+}
+
 const app = express();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 

@@ -14,5 +14,7 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 4. Start the app with `node server.js`.
 5. Visit `http://localhost:3000/signup` to register a user.
 
+The server requires a valid `DATABASE_URL` in your environment. If it's missing, the application will exit with an error message reminding you to create a `.env` file.
+
 ## Notes
 This repository only contains source files. Dependencies must be installed separately.
