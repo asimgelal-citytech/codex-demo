@@ -6,6 +6,15 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 - Sign up form collects name, username, email, contact number with country, password/confirmation, profile picture (5MB limit) and address
 - Login form validates credentials from the database
 
+
+## Troubleshooting
+
+### Blank page in the browser
+The HTML views reference React, ReactDOM, Babel and React Hot Toast from public
+CDNs. If your environment blocks external network requests you may see a blank
+page because these scripts fail to load. In that case download the UMD builds of
+these libraries and serve them locally by updating the corresponding `<script>`
+tags in `views/*.html`.
 - Responsive UI built with React and Tailwind CSS
 - Bento style admin dashboard with editable user descriptions and an ad section
 - Toast notifications for sign up success and description saves
