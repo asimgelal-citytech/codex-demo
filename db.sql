@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS users (
   contact TEXT,
   password TEXT NOT NULL,
   picture TEXT,
-  address TEXT
+  address TEXT,
+  description TEXT
 );
 
 -- store sessions for express-session/connect-pg-simple
