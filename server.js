@@ -6,14 +6,27 @@ const pgSession = require('connect-pg-simple')(session);
 const { Pool } = require('pg');
 require('dotenv').config();
 
+if (!process.env.DATABASE_URL) {
+  console.error('Missing DATABASE_URL in environment. Did you create a .env file?');
+  process.exit(1);
+}
+
+if (!process.env.SESSION_SECRET) {
+  console.warn('SESSION_SECRET is not set, using a default value.');
+}
+
 const app = express();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
 
 app.use(session({
-  store: new pgSession({ pool }),
+  store: new pgSession({
+    pool,
+    createTableIfMissing: true
+  }),
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false
@@ -36,8 +49,8 @@ app.post('/signup', upload.single('picture'), async (req, res) => {
   }
   try {
     await pool.query(
-      'INSERT INTO users (name, username, email, contact, password, picture, address) VALUES ($1,$2,$3,$4,$5,$6,$7)',
-      [name, username, email, contact, password, req.file ? req.file.filename : null, address]
+      'INSERT INTO users (name, username, email, contact, password, picture, address, description) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+      [name, username, email, contact, password, req.file ? req.file.filename : null, address, null]
     );
     res.redirect('/login');
   } catch (err) {
@@ -62,10 +75,27 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/admin', async (req, res) => {
+app.get('/admin', (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
-  const result = await pool.query('SELECT * FROM users');
-  res.send(result.rows);
+  res.sendFile(path.join(__dirname, 'views', 'admin.html'));
+});
+
+app.get('/api/users', async (req, res) => {
+  if (!req.session.userId) return res.status(401).send('Unauthorized');
+  const result = await pool.query('SELECT id, name, username, email, description FROM users');
+  res.json(result.rows);
+});
+
+app.put('/api/users/:id', async (req, res) => {
+  if (!req.session.userId) return res.status(401).send('Unauthorized');
+  const { description } = req.body;
+  try {
+    await pool.query('UPDATE users SET description=$1 WHERE id=$2', [description, req.params.id]);
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating description');
+  }
 });
 
 const PORT = process.env.PORT || 3000;
