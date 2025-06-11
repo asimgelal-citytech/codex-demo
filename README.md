@@ -6,7 +6,7 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 - Sign up form collects name, username, email, contact number with country, password/confirmation, profile picture (5MB limit) and address
 - Login form validates credentials from the database
 
-- Responsive UI built with React and Tailwind CSS
+- Responsive UI built with vanilla JavaScript and basic CSS
 - Bento style admin dashboard with editable user descriptions and an ad section
 - Toast notifications for sign up success and description saves
 

@@ -4,53 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;}
+    .form-container{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);max-width:400px;width:100%;}
+    h2{text-align:center;margin-top:0;margin-bottom:16px;}
+    .form-group{margin-bottom:12px;}
+    label{display:block;font-size:14px;margin-bottom:4px;}
+    input{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;}
+    button{width:100%;padding:10px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;}
+    .link{text-align:center;margin-top:12px;font-size:14px;}
+    #toast{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 12px;border-radius:4px;display:none;}
+  </style>
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center">
-  <div id="root" class="w-full max-w-md"></div>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/react-hot-toast@2/dist/index.umd.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel" data-presets="typescript,react">
-    const { useState, useEffect } = React;
-    const toast = window['react-hot-toast'].toast;
-
-    function LoginForm() {
-      useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('signup')) {
-          toast.success('Welcome! Your account has been created successfully.', { duration: 4000 });
-        }
-      }, []);
-      return (
-        <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-xl font-semibold mb-4 text-center">Sign In</h2>
-          <form action="/login" method="post" className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Username</label>
-              <input type="text" name="username" required className="w-full border rounded px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Password</label>
-              <input type="password" name="password" required className="w-full border rounded px-3 py-2" />
-            </div>
-            <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Sign In</button>
-          </form>
-          <div className="text-center mt-4 text-sm">
-            Don't have an account? <a href="/signup" className="text-blue-600">Sign Up</a>
-          </div>
-        </div>
-      );
+<body>
+  <div id="toast"></div>
+  <div class="form-container">
+    <h2>Sign In</h2>
+    <form action="/login" method="post">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit">Sign In</button>
+    </form>
+    <div class="link">Don't have an account? <a href="/signup">Sign Up</a></div>
+  </div>
+  <script>
+    function showToast(msg){
+      const t=document.getElementById('toast');
+      t.textContent=msg;
+      t.style.display='block';
+      setTimeout(()=>t.style.display='none',4000);
     }
-
-    ReactDOM.render(
-      <React.Fragment>
-        <LoginForm />
-        <react-hot-toast.Toaster position="top-center" />
-      </React.Fragment>,
-      document.getElementById('root')
-    );
+    document.addEventListener('DOMContentLoaded',()=>{
+      const params=new URLSearchParams(window.location.search);
+      if(params.get('signup')){
+        showToast('Welcome! Your account has been created successfully.');
+      }
+    });
   </script>
 </body>
 </html>
