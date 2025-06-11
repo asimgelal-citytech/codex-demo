@@ -5,6 +5,7 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 ## Features
 - Sign up form collects name, username, email, contact number with country, password/confirmation, profile picture (5MB limit) and address
 - Login form validates credentials from the database
+
 - Responsive UI built with React and Tailwind CSS
 - Bento style admin dashboard with editable user descriptions and an ad section
 - Toast notifications for sign up success and description saves
@@ -18,6 +19,9 @@ This project is a minimal Node.js/Express application demonstrating a sign up fo
 6. After logging in, open `http://localhost:3000/admin` to manage users.
 
 If you see an error about the `session` table not existing, make sure you ran `db.sql` to create it.
+
+The server requires a valid `DATABASE_URL` in your environment. If it's missing, the application will exit with an error message reminding you to create a `.env` file.
+
 
 The server requires a valid `DATABASE_URL` in your environment. If it's missing, the application will exit with an error message reminding you to create a `.env` file.
 

@@ -79,11 +79,11 @@
     function AdminPanel() {
       const [users, setUsers] = useState<User[]>([]);
       useEffect(() => {
+
         fetch('/api/users')
           .then(res => res.json())
           .then(setUsers);
       }, []);
-
       const saveDescription = async (id:number, description:string) => {
         await fetch(`/api/users/${id}`, {
           method: 'PUT',
@@ -108,7 +108,6 @@
         </div>
       );
     }
-
     ReactDOM.render(
       <React.Fragment>
         <AdminPanel />
